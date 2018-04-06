@@ -19,9 +19,9 @@
     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true"/>
 
     <!-- Indicates use of Android's VR-mode, available only on Android N+. -->
-    <uses-feature android:name="android.software.vr.mode" android:required="false"/>
+    <!--<uses-feature android:name="android.software.vr.mode" android:required="false"/>-->
     <!-- Indicates use of VR features that are available only on Daydream-ready devices. -->
-    <uses-feature android:name="android.hardware.vr.high_performance" android:required="false"/>
+    <!--<uses-feature android:name="android.hardware.vr.high_performance" android:required="false"/>-->
 
     <application
         android:allowBackup="true"

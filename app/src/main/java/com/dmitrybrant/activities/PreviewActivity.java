@@ -41,6 +41,8 @@ public class PreviewActivity extends Activity implements SurfaceHolder.Callback,
         new Utility(this).createSession1();
 
 
+
+
     }
 
     @Override

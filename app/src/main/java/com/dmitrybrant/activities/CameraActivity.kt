@@ -7,9 +7,11 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.Rect
 import android.hardware.*
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -34,10 +36,11 @@ class CameraActivity : Activity(), Camera.PictureCallback, SurfaceHolder.Callbac
     private var mCameraData: ByteArray? = null
     private var mIsCapturing: Boolean = false
     //TextView textLIGHT_available, textLIGHT_reading;
+    private var btnTop: Button? = null
+    private var btnBottom: Button? = null
     private var globalLight: Double = 0.toDouble()
 
     private val mCaptureImageButtonClickListener = View.OnClickListener {
-
 
         captureImage()
 
@@ -53,10 +56,13 @@ class CameraActivity : Activity(), Camera.PictureCallback, SurfaceHolder.Callbac
             val intent = Intent()
             intent.putExtra(EXTRA_CAMERA_DATA, mCameraData)
             setResult(Activity.RESULT_OK, intent)
+
+
         } else {
             setResult(Activity.RESULT_CANCELED)
         }
         finish()
+
     }
 
 
@@ -120,6 +126,10 @@ class CameraActivity : Activity(), Camera.PictureCallback, SurfaceHolder.Callbac
         //textLIGHT_available = findViewById(R.id.textLIGHT_available);
         //textLIGHT_reading = findViewById(R.id.textLIGHT_reading);
 
+        btnTop = findViewById(R.id.btnTop)
+        btnBottom = findViewById(R.id.btnBottom)
+
+
         mCameraPreview = findViewById(R.id.preview_view)
         val surfaceHolder = mCameraPreview!!.holder
         surfaceHolder.addCallback(this)
@@ -129,6 +139,37 @@ class CameraActivity : Activity(), Camera.PictureCallback, SurfaceHolder.Callbac
 
 
         mCaptureImageButton!!.setOnClickListener(mCaptureImageButtonClickListener)
+
+        btnTop?.setOnClickListener(View.OnClickListener {
+
+            val locationTop = IntArray(2)
+            btnTop!!.getLocationOnScreen(locationTop)
+            val Top_x = locationTop[0]
+            val Top_y = locationTop[1]
+
+            Log.d("TopX--------------:", Top_x.toString())
+            Log.d("TopY--------------:", Top_y.toString())
+
+            btnTop?.setVisibility(View.GONE)
+
+        })
+
+
+        btnBottom?.setOnClickListener(View.OnClickListener {
+
+            val locationBottom = IntArray(2)
+            btnBottom!!.getLocationOnScreen(locationBottom)
+            val Bottom_x = locationBottom[0]
+            val Bottom_y = locationBottom[1]
+
+            Log.d("Bottom_x--------------:", Bottom_x.toString())
+            Log.d("Bottom_y--------------:", Bottom_y.toString())
+
+            btnBottom?.setVisibility(View.GONE)
+
+        })
+
+
 
         val doneButton = findViewById<Button>(R.id.done_button)
         doneButton.setOnClickListener(mDoneButtonClickListener)
@@ -259,8 +300,6 @@ class CameraActivity : Activity(), Camera.PictureCallback, SurfaceHolder.Callbac
         mCaptureImageButton!!.setText(R.string.recapture_image)
         mCaptureImageButton!!.setOnClickListener(mRecaptureImageButtonClickListener)
     }
-
-
 
     companion object {
 
